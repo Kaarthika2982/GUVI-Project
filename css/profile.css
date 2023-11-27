@@ -1,0 +1,52 @@
+/* styles.css */
+
+body {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+}
+img{
+    width: 50px;
+}
+
+.profile-heading {
+    padding-top: 20px;
+    font-size: 30px;
+}
+
+.profile-input {
+    font-size: 18px;
+    min-width: 300px;
+    max-width: 500px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(234, 234, 234);
+}
+
+.edit-btn,
+.logout-btn,
+.save-btn {
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin-right: 10px;
+}
+
+.edit-btn {
+    background-color: rgb(210, 140, 9);
+}
+
+.logout-btn {
+    background-color: red;
+}
+
+.save-btn {
+    background-color: green;
+    display: none;
+}
