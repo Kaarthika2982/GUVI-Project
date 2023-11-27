@@ -2,7 +2,6 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
-// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -18,12 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     exit;
 }
 
-// Login logic
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loginUsername = $_POST["username"];
     $loginPassword = $_POST["password"];
 
-    // Use prepared statement to prevent SQL injection
     $stmt = $conn->prepare("SELECT username, password FROM users WHERE username = ?");
     $stmt->bind_param("s", $loginUsername);
     $stmt->execute();
@@ -33,10 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($dbUsername, $dbPassword);
         $stmt->fetch();
 
-        // Verify the password
         if (password_verify($loginPassword, $dbPassword)) {
-            // Login successful, redirect to home.html
-            // header('Location: http://localhost:5500/Style/home.html');
             echo "Login Success";
             exit;
         } else {
