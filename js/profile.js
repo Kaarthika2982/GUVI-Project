@@ -1,26 +1,50 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const editBtn = document.getElementById('editBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const inputs = document.querySelectorAll('input[type="text"]');
+$(document).ready(function () {
+    $("#editBtn").click(function () {
+        $(".profile-input").prop("disabled", false);
 
-    editBtn.addEventListener('click', function () {
-        saveBtn.style.display = 'block';
-        editBtn.style.display = 'none';
-        logoutBtn.style.display = 'none';
+        $("#editBtn").hide();
+        $("#saveBtn").show();
+    });
 
-        inputs.forEach(function(input) {
-            input.disabled = false;
+    $("#saveBtn").click(function () {
+        var id = 1; 
+        var name = $("#nameInput").val();
+        var fatherName = $("#fatherNameInput").val();
+        var motherName = $("#motherNameInput").val();
+        var email = $("#emailInput").val();
+        var address = $("#addressInput").val();
+        var mobile = $("#mobileInput").val();
+        var dob = $("#dobInput").val();
+
+        $.ajax({
+            type: "POST",
+            url: "api_profile.php", 
+            data: {
+                action: "updateUserData", 
+                id: id,
+                name: name,
+                fatherName: fatherName,
+                motherName: motherName,
+                email: email,
+                address: address,
+                mobile: mobile,
+                dob: dob
+            },
+            success: function (response) {
+                alert(response);
+
+                $(".profile-input").prop("disabled", true);
+
+                $("#saveBtn").hide();
+                $("#editBtn").show();
+            },
+            error: function (error) {
+                console.log(error);
+            }
         });
     });
 
-    saveBtn.addEventListener('click', function () {
-        saveBtn.style.display = 'none';
-        editBtn.style.display = 'block';
-        logoutBtn.style.display = 'block';
+    $("#logoutBtn").click(function () {
 
-        inputs.forEach(function(input) {
-            input.disabled = true;
-        });
     });
 });
