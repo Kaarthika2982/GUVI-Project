@@ -1,46 +1,43 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Content-Type");
 $servername = "localhost";
 $username = "root";
-$password = "";
-$dbname = "register";
+$password = " ";
+$dbname = "guvi";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    echo "Welcome to the login form!";
-    exit;
+
+function storeData($email, $password) {
+    global $conn;
+
+    $sql = "INSERT INTO users (email, password) VALUES ('$email', '$password')";
+    $result = $conn->query($sql);
+
+    if ($result === TRUE) {
+        return "Data stored successfully";
+    } else {
+        return "Error: " . $sql . "<br>" . $conn->error;
+    }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $loginUsername = $_POST["username"];
-    $loginPassword = $_POST["password"];
+function retrieveData() {
+    global $conn;
 
-    $stmt = $conn->prepare("SELECT username, password FROM users WHERE username = ?");
-    $stmt->bind_param("s", $loginUsername);
-    $stmt->execute();
-    $stmt->store_result();
+    $sql = "SELECT * FROM users";
+    $result = $conn->query($sql);
 
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($dbUsername, $dbPassword);
-        $stmt->fetch();
+    $data = array();
 
-        if (password_verify($loginPassword, $dbPassword)) {
-            echo "Login Success";
-            exit;
-        } else {
-            echo "Incorrect password";
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
         }
-    } else {
-        echo "Username not found";
     }
 
-    $stmt->close();
+    return $data;
 }
 
 $conn->close();
