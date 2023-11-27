@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.login-form {
+    max-width: 350px;
+    min-width: 330px;
+    border-radius: 20px;
+    border: 0 auto;
+    box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.login-heading {
+    text-align: center;
+}
+form a{
+    text-align: center;
+    width: 100%;
+    display: block;
+}
